@@ -1,0 +1,7 @@
+<section>
+  <h1>Person</h1>
+  <form [formGroup]="personFormGroup">
+    <app-personal-info-form [parentForm]="personFormGroup.get('personalInfo')"></app-personal-info-form>
+    <app-address-form [parentForm]="personFormGroup.get('address')"></app-address-form>
+  </form>
+</section>
