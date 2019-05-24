@@ -1,15 +1,14 @@
 <main>
-  <button mat-button color="primary" (click)="addPersonForm()">Add</button>
+  <button mat-raised-button color="primary" (click)="addPersonForm()">Add</button>
 
-  <form [formGroup]="contractForm">
-    <div formArrayName="personArray" *ngFor="let contract of contractArray; let i = index">
-      <div *ngIf="personArray.controls[i]">
-        <app-person-form [personFormGroup]="personArray.controls[i]"></app-person-form>
-      </div>
+  <form [formGroup]="contractForm" class="contract-form">
+    <div class="person-form" formArrayName="personArray" *ngFor="let contract of contractArray; let i = index">
+      <app-person-form [no]="i" [personFormGroup]="personArray.controls[i]"></app-person-form>
     </div>
   </form>
 
-  <hr />
+  <mat-divider></mat-divider>
+
   <section>
     <pre>Form data is: {{ demoFormValues | json }}</pre>
   </section>
