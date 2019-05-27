@@ -3,6 +3,7 @@
 
   <form [formGroup]="contractForm" class="contract-form">
     <div class="person-form" formArrayName="personArray" *ngFor="let contract of contractArray; let i = index">
+      <p>Form is valid : {{ personArray.controls[i].valid }}</p>
       <app-person-form [no]="i" [personFormGroup]="personArray.controls[i]"></app-person-form>
     </div>
   </form>

@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-address-form',
   templateUrl: './address-form.component.html',
-  styleUrls: ['./address-form.component.css']
+  styleUrls: ['./address-form.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddressFormComponent implements OnInit {
   @Input() parentForm: FormGroup;
@@ -17,6 +18,6 @@ export class AddressFormComponent implements OnInit {
 
   addFormControlToParentForm() {
     this.parentForm.addControl('road', this.fb.control(''));
-    this.parentForm.addControl('city', this.fb.control(''));
+    this.parentForm.addControl('city', this.fb.control('', Validators.required));
   }
 }

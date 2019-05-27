@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { Contract } from './models/contract.model';
 
@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   demoFormValues: any;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.initialiseArray();
@@ -40,7 +40,11 @@ export class AppComponent implements OnInit {
 
   addPersonForm(person) {
     this.contractArray.push(person);
+
     this.personArray.push(this.fb.group({}));
+    this.personArray.updateValueAndValidity();
+
+    this.cdr.detectChanges();
   }
 
   get personArray() {
