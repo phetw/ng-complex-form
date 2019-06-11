@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
+import { PersonalInfo } from 'src/app/models/personal-info.model';
+import { FormService } from 'src/app/service/form.service';
 
 @Component({
   selector: 'app-personal-info-form',
@@ -10,15 +12,21 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class PersonalInfoFormComponent implements OnInit {
   @Input() parentForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  /** form attributes & initial value */
+  private personalInfoForm: PersonalInfo = {
+    firstName: '',
+    lastName: '',
+    age: null
+  };
+  private personalInfoFormValidator: Validators[] = [Validators.required, Validators.required, Validators.required];
+
+  constructor(private formService: FormService) {}
 
   ngOnInit() {
     this.addFormControlToParentForm();
   }
 
   addFormControlToParentForm() {
-    this.parentForm.addControl('firstName', this.fb.control('', Validators.required));
-    this.parentForm.addControl('lastName', this.fb.control('', Validators.required));
-    this.parentForm.addControl('age', this.fb.control('', Validators.required));
+    this.formService.addFormControlAndValidator<PersonalInfo>(this.parentForm, this.personalInfoForm, this.personalInfoFormValidator);
   }
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
+import { Address } from 'src/app/models/address.model';
+import { FormService } from 'src/app/service/form.service';
 
 @Component({
   selector: 'app-address-form',
@@ -10,14 +12,20 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class AddressFormComponent implements OnInit {
   @Input() parentForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  /** form attributes & initial value */
+  private addressForm: Address = {
+    road: '',
+    city: ''
+  };
+  private addressFormValidator: Validators[] = [null, [Validators.required]];
+
+  constructor(private formService: FormService) {}
 
   ngOnInit() {
     this.addFormControlToParentForm();
   }
 
   addFormControlToParentForm() {
-    this.parentForm.addControl('road', this.fb.control(''));
-    this.parentForm.addControl('city', this.fb.control('', Validators.required));
+    this.formService.addFormControlAndValidator<Address>(this.parentForm, this.addressForm, this.addressFormValidator);
   }
 }
